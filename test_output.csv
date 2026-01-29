@@ -1,0 +1,32 @@
+﻿#
+# LINHAS COMEÇANDO COM # SÃO CONSIDERADAS COMENTÁRIOS.
+#
+#
+# DOIS TIPOS DE CAMPOS:
+# - OBRIGATÓRIO: CAMPO QUE DEVE SER SEMPRE INFORMADO.
+# - OPCIONAL: CAMPO QUE NÃO PRECISA SER INFORMADO, PORÉM DEVE-SE EXCLUIR A COLUNA.
+#
+#                           FORNECEDOR_UNICO:                        Fornecedor (identificador externo ou cpf ou cnpj), OBRIGATÓRIO
+#                                       NOME:                                                                     Nome, OBRIGATÓRIO
+#                                  DESCRICAO:                                                                Descrição,    OPCIONAL
+#                                       TIPO: Tipo (inteiro ou fracionado fixo ou fracionado variável ou particionado),    OPCIONAL
+#                                 ID_EXTERNO:                                                    Identificação externa,    OPCIONAL
+#                        FATOR_MULTIPLICACAO:                            Fator de multiplicação (caso fracionado fixo),    OPCIONAL
+#                      LIMITE_PALLET_VIRTUAL:                                                 Limite do pallet virtual, OBRIGATÓRIO
+#                               LIMITE_BLOCO:                                                          Limite do bloco,    OPCIONAL
+#                            UNIDADE_TAMANHO:                                          Unidade de medida (Recebimento),    OPCIONAL
+#                 UNIDADE_TAMANHO_SECUNDARIA:                                            Unidade de medida (Expedição),    OPCIONAL
+#                             INFORMAR_SERIE:                                       Série como dado complementar (S/N),    OPCIONAL
+#                              INFORMAR_LOTE:                                        Lote como dado complementar (S/N),    OPCIONAL
+#                              INFORMAR_PESO:                                        Peso como dado complementar (S/N),    OPCIONAL
+#                             INFORMAR_VALOR:                                       Valor como dado complementar (S/N),    OPCIONAL
+#                   INFORMAR_DATA_FABRICACAO:                          Data de fabricação como dado complementar (S/N),    OPCIONAL
+#                     INFORMAR_DATA_VALIDADE:                            Data de validade como dado complementar (S/N),    OPCIONAL
+#                                 COD_BARRAS:                                                         Código de barras,    OPCIONAL
+#                                 REG_STATUS:                               Status ('A' para Ativo e 'I' para Inativo),    OPCIONAL
+#                           CONTRATO_CLIENTE:                                        Identificação externa do contrato,    OPCIONAL
+#                          CODIGO_INTEGRACAO:              Código de integração com outras aplicações (API's externas),    OPCIONAL
+#
+FORNECEDOR_UNICO;NOME;DESCRICAO;TIPO;ID_EXTERNO;FATOR_MULTIPLICACAO;LIMITE_PALLET_VIRTUAL;LIMITE_BLOCO;UNIDADE_TAMANHO;UNIDADE_TAMANHO_SECUNDARIA;INFORMAR_SERIE;INFORMAR_LOTE;INFORMAR_PESO;INFORMAR_VALOR;INFORMAR_DATA_FABRICACAO;INFORMAR_DATA_VALIDADE;COD_BARRAS;REG_STATUS;CONTRATO_CLIENTE;CODIGO_INTEGRACAO
+
+

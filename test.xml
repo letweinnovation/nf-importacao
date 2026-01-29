@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
+    <NFe>
+        <infNFe Id="NFe123" versao="4.00">
+            <emit>
+                <CNPJ>12345678000199</CNPJ>
+                <xNome>EMITENTE TESTE</xNome>
+            </emit>
+            <det nItem="1">
+                <prod>
+                    <cProd>COD001</cProd>
+                    <xProd>PRODUTO TESTE 1</xProd>
+                    <NCM>12345678</NCM>
+                    <uCom>UN</uCom>
+                </prod>
+            </det>
+            <det nItem="2">
+                <prod>
+                    <cProd>COD002</cProd>
+                    <xProd>PRODUTO TESTE 2</xProd>
+                    <NCM>87654321</NCM>
+                    <uCom>PC</uCom>
+                </prod>
+            </det>
+        </infNFe>
+    </NFe>
+</nfeProc>
