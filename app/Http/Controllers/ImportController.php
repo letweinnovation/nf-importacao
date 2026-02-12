@@ -283,7 +283,7 @@ class ImportController extends Controller
                          }
                         break;
                     case 'CONTRATO':
-                        $rowData[] = '';
+                        $rowData[] = '[INFORMAR NO ARQUIVO]';
                         break;
                     case 'DATA_AGENDAMENTO':
                         $rowData[] = '';
@@ -379,7 +379,7 @@ class ImportController extends Controller
                          }
                         break;
                     case 'CONTRATO':
-                        $rowData[] = '';
+                        $rowData[] = '[INFORMAR NO ARQUIVO]';
                         break;
                     case 'DATA_AGENDAMENTO':
                         $rowData[] = '';
