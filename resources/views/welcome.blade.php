@@ -14,7 +14,8 @@
 </head>
 
 <body
-    class="bg-slate-900 text-white font-sans antialiased min-h-screen flex flex-col relative overflow-hidden selection:bg-brand-500 selection:text-white">
+    class="bg-slate-900 text-white font-sans antialiased min-h-screen flex flex-col relative overflow-hidden selection:bg-brand-500 selection:text-white"
+    x-data="fileUpload()">
 
     <!-- Loading Overlay with Progress Bar -->
     <div x-data="{ loading: false, progress: 0 }" @process-start.window="loading = true; progress = 0; 
@@ -194,8 +195,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow flex flex-col items-center justify-center p-6 w-full max-w-5xl mx-auto"
-        x-data="fileUpload()">
+    <main class="flex-grow flex flex-col items-center justify-center p-6 w-full max-w-5xl mx-auto">
 
         <div class="text-center mb-10 space-y-2">
             <h2
