@@ -698,6 +698,7 @@
     </script>
         <!-- De-Para Modal -->
         <div x-show="showHelp" style="display: none;" class="fixed inset-0 z-50 flex items-center justify-center p-4"
+            @keydown.escape.window="showHelp = false"
             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
@@ -755,7 +756,7 @@
                 <div class="px-6 py-4 bg-slate-800/50 border-t border-slate-700 text-right">
                     <button @click="showHelp = false"
                         class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-lg transition-colors">
-                        Fechar (ESC)
+                        Fechar
                     </button>
                 </div>
             </div>
