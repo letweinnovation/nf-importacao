@@ -352,12 +352,12 @@
                 </h3>
                 <div class="grid grid-cols-1 gap-8">
                     <button
-                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 p-px shadow-lg hover:shadow-blue-500/25 transition-all duration-300 hover:scale-[1.02]"
+                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-yellow-300 to-yellow-500 p-px shadow-lg hover:shadow-yellow-400/25 transition-all duration-300 hover:scale-[1.02]"
                         @click="processFiles('recebimento')">
                         <div
                             class="relative bg-slate-900/50 rounded-xl p-4 flex items-center justify-between group-hover:bg-opacity-0 transition-all duration-300">
                             <div class="flex flex-col items-start">
-                                <span class="text-[10px] font-bold text-blue-300 tracking-wider uppercase opacity-80">Exportar para</span>
+                                <span class="text-[10px] font-bold text-yellow-200 tracking-wider uppercase opacity-80">Exportar para</span>
                                 <span class="text-lg font-bold text-white">Recebimento</span>
                             </div>
                             <div
