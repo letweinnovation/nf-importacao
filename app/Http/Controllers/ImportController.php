@@ -31,7 +31,7 @@ class ImportController extends Controller
 
     private function exportOmie(array $files)
     {
-        $templatePath = base_path('Omie_Produtos_v1_9_5.xlsx');
+        $templatePath = base_path('resources/templates/Omie_Produtos_v1_9_5.xlsx');
 
         if (!file_exists($templatePath)) {
             throw new \Exception('Modelo Excel não encontrado no servidor.');
@@ -102,7 +102,7 @@ class ImportController extends Controller
     private function exportGti(array $files)
     {
         try {
-            $templatePath = base_path('modeloImportacaoProduto.csv');
+            $templatePath = base_path('resources/templates/modeloImportacaoProduto.csv');
 
             if (!file_exists($templatePath)) {
                 throw new \Exception('Modelo CSV não encontrado no servidor em: ' . $templatePath);
@@ -212,7 +212,7 @@ class ImportController extends Controller
 
     private function exportRecebimento(array $files)
     {
-        return $this->generateCsvExport($files, 'XMLs/modeloImportacaoRecebimento.csv', 'Importacao_Recebimento_', function ($xml, $det, $headerColumns) {
+        return $this->generateCsvExport($files, 'resources/templates/modeloImportacaoRecebimento.csv', 'Importacao_Recebimento_', function ($xml, $det, $headerColumns) {
             $prod = $det->prod;
             $rowData = [];
             
@@ -310,7 +310,7 @@ class ImportController extends Controller
 
     private function exportExpedicao(array $files)
     {
-         return $this->generateCsvExport($files, 'XMLs/modeloImportacaoExpedição.csv', 'Importacao_Expedicao_', function ($xml, $det, $headerColumns) {
+         return $this->generateCsvExport($files, 'resources/templates/modeloImportacaoExpedicao.csv', 'Importacao_Expedicao_', function ($xml, $det, $headerColumns) {
             $prod = $det->prod;
             $rowData = [];
             

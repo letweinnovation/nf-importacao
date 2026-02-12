@@ -86,6 +86,7 @@ jobs:
             mkdir -p storage/framework/views
             mkdir -p storage/framework/cache
             mkdir -p storage/logs
+            mkdir -p storage/app
             mkdir -p bootstrap/cache
             chmod -R 777 storage bootstrap/cache
             

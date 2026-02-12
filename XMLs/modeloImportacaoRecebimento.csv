@@ -1,0 +1,27 @@
+﻿#
+# LINHAS COMEÇANDO COM # SÃO CONSIDERADAS COMENTÁRIOS.
+#
+#
+# DOIS TIPOS DE CAMPOS:
+# - OBRIGATÓRIO: CAMPO QUE DEVE SER SEMPRE INFORMADO.
+# - OPCIONAL: CAMPO QUE NÃO PRECISA SER INFORMADO, PORÉM DEVE-SE EXCLUIR A COLUNA.
+#
+#         ID_EXTERNO:                                        Identificador externo do recebimento,    OPCIONAL
+#       DESTINATARIO:                  Destinatário (identificador externo ou cpf ou cnpj ou cpe), OBRIGATÓRIO
+#            ARMAZEM:                                             Armazém (identificador externo), OBRIGATÓRIO
+#            PRODUTO:                                      Produto ou Kit (identificador externo), OBRIGATÓRIO
+#         QUANTIDADE:                                                                  Quantidade, OBRIGATÓRIO
+#         SERIE_ITEM:                                        Série do item - Dados Complementares,    OPCIONAL
+#          LOTE_ITEM:                                         Lote do item - Dados Complementares,    OPCIONAL
+#          PESO_ITEM:                                        Peso do item  - Dados Complementares,    OPCIONAL
+#         VALOR_ITEM:                              Valor unitário do item  - Dados Complementares,    OPCIONAL
+# DATA_FABRICACAO_ITEM:              Data de fabricação do item (dd/MM/yyyy) - Dados Complementares,    OPCIONAL
+# DATA_VALIDADE_ITEM:                Data de validade do item (dd/MM/yyyy) - Dados Complementares,    OPCIONAL
+#           CONTRATO:                                           Identificação externa do contrato,    OPCIONAL
+#   DATA_AGENDAMENTO: Data de agendamento (dd/MM/yyyy ou dd/MM/yyyy HH:mm ou dd/MM/yyyy HH:mm:ss),    OPCIONAL
+#      NUMERO_PEDIDO:                                                            Número do Pedido,    OPCIONAL
+#         NUMERO_N_F:                                                       Número da Nota Fiscal,    OPCIONAL
+#          SERIE_N_F:                                                        Série da Nota Fiscal,    OPCIONAL
+#     VALOR_OPERACAO:                                                           Valor da operação,    OPCIONAL
+#
+ID_EXTERNO;DESTINATARIO;ARMAZEM;PRODUTO;QUANTIDADE;SERIE_ITEM;LOTE_ITEM;PESO_ITEM;VALOR_ITEM;DATA_FABRICACAO_ITEM;DATA_VALIDADE_ITEM;CONTRATO;DATA_AGENDAMENTO;NUMERO_PEDIDO;NUMERO_N_F;SERIE_N_F;VALOR_OPERACAO
