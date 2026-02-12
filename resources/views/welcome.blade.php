@@ -311,11 +311,11 @@
                                 <span class="text-[10px] font-bold text-indigo-300 tracking-wider uppercase opacity-80">Exportar para</span>
                                 <span class="text-lg font-bold text-white">Omie</span>
                             </div>
-                            <button @click.stop="toggleHelp('Omie')" class="p-2 text-indigo-300/50 hover:text-white transition-colors rounded-full hover:bg-indigo-500/20" title="Ver De-Para">
+                            <div role="button" @click.stop="toggleHelp('Omie')" class="p-2 text-indigo-300/50 hover:text-white transition-colors rounded-full hover:bg-indigo-500/20 cursor-pointer" title="Ver De-Para">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.178-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
                                 </svg>
-                            </button>
+                            </div>
                             <div
                                 class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -336,11 +336,11 @@
                                 <span class="text-[10px] font-bold text-emerald-300 tracking-wider uppercase opacity-80">Exportar para</span>
                                 <span class="text-lg font-bold text-white">GTI PLUG</span>
                             </div>
-                            <button @click.stop="toggleHelp('GTI PLUG')" class="p-2 text-emerald-300/50 hover:text-white transition-colors rounded-full hover:bg-emerald-500/20" title="Ver De-Para">
+                            <div role="button" @click.stop="toggleHelp('GTI PLUG')" class="p-2 text-emerald-300/50 hover:text-white transition-colors rounded-full hover:bg-emerald-500/20 cursor-pointer" title="Ver De-Para">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.178-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
                                 </svg>
-                            </button>
+                            </div>
                             <div
                                 class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -370,11 +370,11 @@
                                 <span class="text-[10px] font-bold text-yellow-200 tracking-wider uppercase opacity-80">Exportar para</span>
                                 <span class="text-lg font-bold text-white">Recebimento</span>
                             </div>
-                            <button @click.stop="toggleHelp('Recebimento')" class="p-2 text-yellow-200/50 hover:text-white transition-colors rounded-full hover:bg-yellow-500/20" title="Ver De-Para">
+                            <div role="button" @click.stop="toggleHelp('Recebimento')" class="p-2 text-yellow-200/50 hover:text-white transition-colors rounded-full hover:bg-yellow-500/20 cursor-pointer" title="Ver De-Para">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.178-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
                                 </svg>
-                            </button>
+                            </div>
                             <div
                                 class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -395,11 +395,11 @@
                                 <span class="text-[10px] font-bold text-rose-300 tracking-wider uppercase opacity-80">Exportar para</span>
                                 <span class="text-lg font-bold text-white">Expedição</span>
                             </div>
-                            <button @click.stop="toggleHelp('Expedição')" class="p-2 text-rose-300/50 hover:text-white transition-colors rounded-full hover:bg-rose-500/20" title="Ver De-Para">
+                            <div role="button" @click.stop="toggleHelp('Expedição')" class="p-2 text-rose-300/50 hover:text-white transition-colors rounded-full hover:bg-rose-500/20 cursor-pointer" title="Ver De-Para">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.178-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
                                 </svg>
-                            </button>
+                            </div>
                             <div
                                 class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
