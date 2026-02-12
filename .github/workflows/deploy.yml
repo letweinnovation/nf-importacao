@@ -1,0 +1,113 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: 'Commit SHA para deploy (deixe vazio para usar o último da main)'
+        required: false
+        default: ''
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit_sha != '' && inputs.commit_sha || 'main' }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, intl, bcmath, soap, gd, pdo_mysql
+
+      - name: Install Composer Dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Node Dependencies
+        run: npm ci
+
+      - name: Build Assets
+        run: npm run build
+
+      - name: Backup Current Version
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          port: ${{ secrets.HOSTINGER_PORT }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          script: |
+            BACKUP_DIR="${{ secrets.TARGET_DIR }}/../backups"
+            mkdir -p "$BACKUP_DIR"
+            cd ${{ secrets.TARGET_DIR }}/..
+            FOLDER_NAME=$(basename "${{ secrets.TARGET_DIR }}")
+            if [ -d "$FOLDER_NAME" ]; then
+              tar -czf "$BACKUP_DIR/backup_$(date +%Y%m%d_%H%M%S).tar.gz" "$FOLDER_NAME" \
+                --exclude="$FOLDER_NAME/storage" \
+                --exclude="$FOLDER_NAME/node_modules"
+            fi
+            ls -t "$BACKUP_DIR"/backup_*.tar.gz 2>/dev/null | tail -n +6 | xargs -r rm
+
+      - name: Sync Files via SSH
+        uses: easingthemes/ssh-deploy@v5.1.0
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "."
+          REMOTE_HOST: ${{ secrets.HOSTINGER_HOST }}
+          REMOTE_USER: ${{ secrets.HOSTINGER_USER }}
+          REMOTE_PORT: ${{ secrets.HOSTINGER_PORT }}
+          TARGET: ${{ secrets.TARGET_DIR }}
+          EXCLUDE: "/.github/, /.git/, /.env, /node_modules/, /storage/"
+
+      - name: Run Remote Commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          port: ${{ secrets.HOSTINGER_PORT }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          script: |
+            cd ${{ secrets.TARGET_DIR }}
+            chmod -R 775 storage bootstrap/cache
+            /opt/alt/php84/usr/bin/php artisan migrate --force
+            /opt/alt/php84/usr/bin/php artisan cache:clear
+            /opt/alt/php84/usr/bin/php artisan config:clear
+            /opt/alt/php84/usr/bin/php artisan route:clear
+            /opt/alt/php84/usr/bin/php artisan view:clear
+            # Optimize is risky if functions are disabled, but standard in Laravel deploy
+            # /opt/alt/php84/usr/bin/php artisan optimize
+
+      - name: Rollback on Failure
+        if: failure()
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          port: ${{ secrets.HOSTINGER_PORT }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          script: |
+            BACKUP_DIR="${{ secrets.TARGET_DIR }}/../backups"
+            LATEST_BACKUP=$(ls -t "$BACKUP_DIR"/backup_*.tar.gz 2>/dev/null | head -n 1)
+            if [ -n "$LATEST_BACKUP" ]; then
+              cd ${{ secrets.TARGET_DIR }}/..
+              FOLDER_NAME=$(basename "${{ secrets.TARGET_DIR }}")
+              rm -rf "$FOLDER_NAME"
+              tar -xzf "$LATEST_BACKUP"
+            else
+              echo "No backup found for rollback!"
+              exit 1
+            fi

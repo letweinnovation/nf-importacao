@@ -291,50 +291,107 @@
             </div>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 w-full max-w-2xl mt-8" x-show="files.length > 0"
+        <!-- Action Buttons Section -->
+        <div class="w-full max-w-3xl mt-10 grid grid-cols-1 md:grid-cols-2 gap-8" x-show="files.length > 0"
             x-transition.opacity.duration.500ms>
-            <button
-                class="flex-1 group relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 to-indigo-700 p-px shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 hover:scale-[1.02]"
-                @click="processFiles('omie')">
-                <div
-                    class="relative h-full bg-slate-900/50 rounded-2xl p-5 flex items-center justify-between group-hover:bg-opacity-0 transition-all duration-300">
-                    <div class="flex flex-col items-start">
-                        <span class="text-xs font-bold text-indigo-300 tracking-wider uppercase mb-1">Exportar
-                            para</span>
-                        <span class="text-xl font-bold text-white group-hover:text-white/90">Omie</span>
-                    </div>
-                    <div
-                        class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="w-5 h-5 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                        </svg>
-                    </div>
-                </div>
-            </button>
 
-            <button
-                class="flex-1 group relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 p-px shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-[1.02]"
-                @click="processFiles('gti')">
-                <div
-                    class="relative h-full bg-slate-900/50 rounded-2xl p-5 flex items-center justify-between group-hover:bg-opacity-0 transition-all duration-300">
-                    <div class="flex flex-col items-start">
-                        <span class="text-xs font-bold text-emerald-300 tracking-wider uppercase mb-1">Exportar
-                            para</span>
-                        <span class="text-xl font-bold text-white group-hover:text-white/90">GTI PLUG</span>
-                    </div>
-                    <div
-                        class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="w-5 h-5 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                        </svg>
-                    </div>
+            <!-- Cadastro de Produto -->
+            <div class="space-y-4 bg-slate-800/30 p-6 rounded-3xl border border-slate-700/50">
+                <h3 class="text-lg font-semibold text-slate-300 flex items-center gap-2">
+                    <div class="w-1 h-6 bg-indigo-500 rounded-full"></div>
+                    Cadastro de Produto
+                </h3>
+                <div class="grid grid-cols-1 gap-6">
+                    <button
+                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 p-px shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 hover:scale-[1.02]"
+                        @click="processFiles('omie')">
+                        <div
+                            class="relative bg-slate-900/50 rounded-xl p-4 flex items-center justify-between group-hover:bg-opacity-0 transition-all duration-300">
+                            <div class="flex flex-col items-start">
+                                <span class="text-[10px] font-bold text-indigo-300 tracking-wider uppercase opacity-80">Exportar para</span>
+                                <span class="text-lg font-bold text-white">Omie</span>
+                            </div>
+                            <div
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" class="w-5 h-5 text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                            </div>
+                        </div>
+                    </button>
+
+                    <button
+                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 p-px shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-[1.02]"
+                        @click="processFiles('gti')">
+                        <div
+                            class="relative bg-slate-900/50 rounded-xl p-4 flex items-center justify-between group-hover:bg-opacity-0 transition-all duration-300">
+                            <div class="flex flex-col items-start">
+                                <span class="text-[10px] font-bold text-emerald-300 tracking-wider uppercase opacity-80">Exportar para</span>
+                                <span class="text-lg font-bold text-white">GTI PLUG</span>
+                            </div>
+                            <div
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" class="w-5 h-5 text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                            </div>
+                        </div>
+                    </button>
                 </div>
-            </button>
+            </div>
+
+            <!-- Cadastro de Operação GTI PLUG -->
+            <div class="space-y-4 bg-slate-800/30 p-6 rounded-3xl border border-slate-700/50">
+                <h3 class="text-lg font-semibold text-slate-300 flex items-center gap-2">
+                    <div class="w-1 h-6 bg-cyan-500 rounded-full"></div>
+                    Operação GTI PLUG
+                </h3>
+                <div class="grid grid-cols-1 gap-8">
+                    <button
+                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 p-px shadow-lg hover:shadow-blue-500/25 transition-all duration-300 hover:scale-[1.02]"
+                        @click="processFiles('recebimento')">
+                        <div
+                            class="relative bg-slate-900/50 rounded-xl p-4 flex items-center justify-between group-hover:bg-opacity-0 transition-all duration-300">
+                            <div class="flex flex-col items-start">
+                                <span class="text-[10px] font-bold text-blue-300 tracking-wider uppercase opacity-80">Exportar para</span>
+                                <span class="text-lg font-bold text-white">Recebimento</span>
+                            </div>
+                            <div
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" class="w-5 h-5 text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                            </div>
+                        </div>
+                    </button>
+
+                    <button
+                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-rose-500 to-rose-700 p-px shadow-lg hover:shadow-rose-500/25 transition-all duration-300 hover:scale-[1.02]"
+                        @click="processFiles('expedicao')">
+                        <div
+                            class="relative bg-slate-900/50 rounded-xl p-4 flex items-center justify-between group-hover:bg-opacity-0 transition-all duration-300">
+                            <div class="flex flex-col items-start">
+                                <span class="text-[10px] font-bold text-rose-300 tracking-wider uppercase opacity-80">Exportar para</span>
+                                <span class="text-lg font-bold text-white">Expedição</span>
+                            </div>
+                            <div
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" class="w-5 h-5 text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- History Section -->

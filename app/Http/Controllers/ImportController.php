@@ -20,6 +20,10 @@ class ImportController extends Controller
             return $this->exportOmie($files);
         } elseif ($type === 'gti') {
             return $this->exportGti($files);
+        } elseif ($type === 'recebimento') {
+            return $this->exportRecebimento($files);
+        } elseif ($type === 'expedicao') {
+            return $this->exportExpedicao($files);
         }
 
         return back()->with('error', 'Tipo de exportação inválido.');
@@ -202,6 +206,278 @@ class ImportController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('Erro exportacao GTI: ' . $e->getMessage());
+            return response()->json(['message' => 'Ocorreu um erro: ' . $e->getMessage()], 500);
+        }
+    }
+
+    private function exportRecebimento(array $files)
+    {
+        return $this->generateCsvExport($files, 'XMLs/modeloImportacaoRecebimento.csv', 'Importacao_Recebimento_', function ($xml, $det, $headerColumns) {
+            $prod = $det->prod;
+            $rowData = [];
+            
+            // Commmon XML data extraction (using xpath on $xml is safe as ns is registered on $xml)
+            $emit = $xml->xpath('//nfe:infNFe/nfe:emit') ?: $xml->xpath('//emit');
+            $dest = $xml->xpath('//nfe:infNFe/nfe:dest') ?: $xml->xpath('//dest');
+            $ide = $xml->xpath('//nfe:infNFe/nfe:ide') ?: $xml->xpath('//ide');
+            $total = $xml->xpath('//nfe:infNFe/nfe:total/nfe:ICMSTot') ?: $xml->xpath('//total/ICMSTot');
+
+            $nNF = !empty($ide) ? (string) ($ide[0]->nNF ?? '') : '';
+            $serie = !empty($ide) ? (string) ($ide[0]->serie ?? '') : '';
+            $destDoc = !empty($dest) ? (string) ($dest[0]->CNPJ ?? $dest[0]->CPF ?? '') : '';
+            $vNF = !empty($total) ? (string) ($total[0]->vNF ?? '') : '';
+
+             foreach ($headerColumns as $col) {
+                $colName = trim($col);
+                switch ($colName) {
+                    case 'ID_EXTERNO':
+                        $rowData[] = $nNF;
+                        break;
+                    case 'DESTINATARIO':
+                        $rowData[] = $destDoc;
+                        break;
+                    case 'ARMAZEM':
+                        $rowData[] = 'ESTOQUE';
+                        break;
+                    case 'PRODUTO':
+                        $rowData[] = (string) $prod->cProd;
+                        break;
+                    case 'QUANTIDADE':
+                        $rowData[] = (string) $prod->qCom;
+                        break;
+                    case 'SERIE_ITEM':
+                        $rowData[] = '';
+                        break;
+                    case 'LOTE_ITEM':
+                        // Use property access instead of xpath to avoid namespace issues on $det
+                        if (isset($prod->rastro) && isset($prod->rastro->nLote)) {
+                            $rowData[] = (string) $prod->rastro->nLote;
+                        } else {
+                            // Try to extract from infAdProd if it contains "Lote:"
+                            $infAdProd = (string)($det->infAdProd ?? '');
+                            if (preg_match('/Lote:\s*([^\s]+)/i', $infAdProd, $matches)) {
+                                $rowData[] = $matches[1];
+                            } else {
+                                $rowData[] = '';
+                            }
+                        }
+                        break;
+                    case 'PESO_ITEM':
+                        $rowData[] = '';
+                        break;
+                    case 'VALOR_ITEM':
+                        $rowData[] = (string) $prod->vUnCom;
+                        break;
+                    case 'DATA_FABRICACAO_ITEM':
+                         if (isset($prod->rastro) && isset($prod->rastro->dFab)) {
+                             $rowData[] = (string) $prod->rastro->dFab; 
+                         } else {
+                             $rowData[] = '';
+                         }
+                        break;
+                    case 'DATA_VALIDADE_ITEM':
+                        if (isset($prod->rastro) && isset($prod->rastro->dVal)) {
+                             $rowData[] = (string) $prod->rastro->dVal;
+                         } else {
+                             $rowData[] = '';
+                         }
+                        break;
+                    case 'CONTRATO':
+                        $rowData[] = '';
+                        break;
+                    case 'DATA_AGENDAMENTO':
+                        $rowData[] = '';
+                        break;
+                    case 'NUMERO_PEDIDO':
+                         $rowData[] = (string) ($prod->xPed ?? '');
+                        break;
+                    case 'NUMERO_N_F':
+                        $rowData[] = $nNF;
+                        break;
+                    case 'SERIE_N_F':
+                        $rowData[] = $serie;
+                        break;
+                    case 'VALOR_OPERACAO':
+                         $rowData[] = $vNF;
+                        break;
+                    default:
+                        $rowData[] = '';
+                }
+            }
+            return $rowData;
+        });
+    }
+
+    private function exportExpedicao(array $files)
+    {
+         return $this->generateCsvExport($files, 'XMLs/modeloImportacaoExpedição.csv', 'Importacao_Expedicao_', function ($xml, $det, $headerColumns) {
+            $prod = $det->prod;
+            $rowData = [];
+            
+            // Commmon XML data extraction
+            $dest = $xml->xpath('//nfe:infNFe/nfe:dest') ?: $xml->xpath('//dest');
+            $ide = $xml->xpath('//nfe:infNFe/nfe:ide') ?: $xml->xpath('//ide');
+            $total = $xml->xpath('//nfe:infNFe/nfe:total/nfe:ICMSTot') ?: $xml->xpath('//total/ICMSTot');
+
+            $nNF = !empty($ide) ? (string) ($ide[0]->nNF ?? '') : '';
+            $serie = !empty($ide) ? (string) ($ide[0]->serie ?? '') : '';
+            $destDoc = !empty($dest) ? (string) ($dest[0]->CNPJ ?? $dest[0]->CPF ?? '') : '';
+            $vNF = !empty($total) ? (string) ($total[0]->vNF ?? '') : '';
+
+             foreach ($headerColumns as $col) {
+                $colName = trim($col);
+                switch ($colName) {
+                    case 'ID_EXTERNO':
+                        $rowData[] = $nNF;
+                        break;
+                    case 'DESTINATARIO':
+                        $rowData[] = $destDoc;
+                        break;
+                    case 'ARMAZEM':
+                        $rowData[] = 'ESTOQUE';
+                        break;
+                    case 'PRODUTO':
+                        $rowData[] = (string) $prod->cProd;
+                        break;
+                    case 'QUANTIDADE':
+                        $rowData[] = (string) $prod->qCom;
+                        break;
+                    case 'SERIE_ITEM':
+                        $rowData[] = '';
+                        break;
+                    case 'LOTE_ITEM':
+                        if (isset($prod->rastro) && isset($prod->rastro->nLote)) {
+                            $rowData[] = (string) $prod->rastro->nLote;
+                        } else {
+                             // Try to extract from infAdProd if it contains "Lote:"
+                             $infAdProd = (string)($det->infAdProd ?? '');
+                             if (preg_match('/Lote:\s*([^\s]+)/i', $infAdProd, $matches)) {
+                                 $rowData[] = $matches[1];
+                             } else {
+                                 $rowData[] = '';
+                             }
+                        }
+                        break;
+                    case 'PESO_ITEM':
+                        $rowData[] = '';
+                        break;
+                    case 'VALOR_ITEM':
+                        $rowData[] = (string) $prod->vUnCom;
+                        break;
+                     case 'DATA_FABRICACAO_ITEM':
+                         if (isset($prod->rastro) && isset($prod->rastro->dFab)) {
+                             $rowData[] = (string) $prod->rastro->dFab;
+                         } else {
+                             $rowData[] = '';
+                         }
+                        break;
+                    case 'DATA_VALIDADE_ITEM':
+                        if (isset($prod->rastro) && isset($prod->rastro->dVal)) {
+                             $rowData[] = (string) $prod->rastro->dVal;
+                         } else {
+                             $rowData[] = '';
+                         }
+                        break;
+                    case 'CONTRATO':
+                        $rowData[] = '';
+                        break;
+                    case 'DATA_AGENDAMENTO':
+                        $rowData[] = '';
+                        break;
+                    case 'NUMERO_PEDIDO':
+                        $rowData[] = (string) ($prod->xPed ?? '');
+                        break;
+                    case 'NUMERO_N_F':
+                        $rowData[] = $nNF;
+                        break;
+                    case 'SERIE_N_F':
+                        $rowData[] = $serie;
+                        break;
+                    case 'VALOR_OPERACAO':
+                        $rowData[] = $vNF;
+                        break;
+                    case 'INDICADOR_TRANSFERENCIA':
+                        $rowData[] = 'N'; // Padrão N
+                        break;
+                    case 'ARMAZEM_DESTINO_TRANSFERENCIA':
+                        $rowData[] = '';
+                        break;
+                    case 'RECEBIMENTO_ETAPA_REFERENCIA':
+                        $rowData[] = '';
+                        break;
+                    default:
+                        $rowData[] = '';
+                }
+            }
+            return $rowData;
+        });
+    }
+
+    private function generateCsvExport(array $files, string $templateRelativePath, string $outputPrefix, callable $rowMapper)
+    {
+         try {
+            $templatePath = base_path($templateRelativePath);
+
+            if (!file_exists($templatePath)) {
+                throw new \Exception('Modelo CSV não encontrado no servidor em: ' . $templatePath);
+            }
+
+            // Read template
+            $templateContent = file_get_contents($templatePath);
+            $templateContent = preg_replace('/^\xEF\xBB\xBF/', '', $templateContent);
+            $templateContent = str_replace("\r\n", "\n", $templateContent);
+
+            $lines = explode("\n", $templateContent);
+            $headerLine = '';
+            foreach ($lines as $line) {
+                $trimmed = trim($line);
+                if ($trimmed !== '' && strpos($trimmed, '#') !== 0) {
+                    $headerLine = $trimmed;
+                    break;
+                }
+            }
+
+            if (empty($headerLine)) {
+                throw new \Exception('Cabeçalho não encontrado no modelo CSV.');
+            }
+
+            $headerColumns = explode(';', $headerLine);
+            $csvContent = $templateContent;
+
+            if (!str_ends_with($csvContent, "\n")) {
+                $csvContent .= "\n";
+            }
+
+            $totalItems = 0;
+
+            foreach ($files as $file) {
+                $xml = simplexml_load_file($file->getRealPath());
+                if (!$xml) continue;
+
+                $ns = $xml->getNamespaces(true);
+                $xml->registerXPathNamespace('nfe', $ns[''] ?? 'http://www.portalfiscal.inf.br/nfe');
+
+                $dets = $xml->xpath('//nfe:infNFe/nfe:det') ?: $xml->xpath('//det');
+
+                foreach ($dets as $det) {
+                    $totalItems++;
+                    $rowData = $rowMapper($xml, $det, $headerColumns);
+                    $csvContent .= implode(';', $rowData) . "\n";
+                }
+            }
+
+            if ($totalItems === 0) {
+                throw new \Exception('Nenhum item encontrado nos arquivos XML.');
+            }
+
+            $fileName = $outputPrefix . date('Y-m-d_H-i-s') . '.csv';
+            $tempPath = storage_path('app/' . $fileName);
+            file_put_contents($tempPath, $csvContent);
+
+            return response()->download($tempPath, $fileName)->deleteFileAfterSend(true);
+
+        } catch (\Exception $e) {
+             \Log::error('Erro exportacao: ' . $e->getMessage());
             return response()->json(['message' => 'Ocorreu um erro: ' . $e->getMessage()], 500);
         }
     }
