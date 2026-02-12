@@ -306,11 +306,16 @@
                         class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 p-px shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 hover:scale-[1.02]"
                         @click="processFiles('omie')">
                         <div
-                            class="relative bg-slate-900/50 rounded-xl p-4 flex items-center justify-between group-hover:bg-opacity-0 transition-all duration-300">
-                            <div class="flex flex-col items-start">
+                            class="relative bg-slate-900/50 rounded-xl p-4 flex items-center gap-4 group-hover:bg-opacity-0 transition-all duration-300">
+                            <div class="flex flex-col items-start flex-1">
                                 <span class="text-[10px] font-bold text-indigo-300 tracking-wider uppercase opacity-80">Exportar para</span>
                                 <span class="text-lg font-bold text-white">Omie</span>
                             </div>
+                            <button @click.stop="toggleHelp('Omie')" class="p-2 text-indigo-300/50 hover:text-white transition-colors rounded-full hover:bg-indigo-500/20" title="Ver De-Para">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.178-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                                </svg>
+                            </button>
                             <div
                                 class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -326,11 +331,16 @@
                         class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 p-px shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-[1.02]"
                         @click="processFiles('gti')">
                         <div
-                            class="relative bg-slate-900/50 rounded-xl p-4 flex items-center justify-between group-hover:bg-opacity-0 transition-all duration-300">
-                            <div class="flex flex-col items-start">
+                            class="relative bg-slate-900/50 rounded-xl p-4 flex items-center gap-4 group-hover:bg-opacity-0 transition-all duration-300">
+                            <div class="flex flex-col items-start flex-1">
                                 <span class="text-[10px] font-bold text-emerald-300 tracking-wider uppercase opacity-80">Exportar para</span>
                                 <span class="text-lg font-bold text-white">GTI PLUG</span>
                             </div>
+                            <button @click.stop="toggleHelp('GTI PLUG')" class="p-2 text-emerald-300/50 hover:text-white transition-colors rounded-full hover:bg-emerald-500/20" title="Ver De-Para">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.178-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                                </svg>
+                            </button>
                             <div
                                 class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -355,11 +365,16 @@
                         class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-yellow-300 to-yellow-500 p-px shadow-lg hover:shadow-yellow-400/25 transition-all duration-300 hover:scale-[1.02]"
                         @click="processFiles('recebimento')">
                         <div
-                            class="relative bg-slate-900/50 rounded-xl p-4 flex items-center justify-between group-hover:bg-opacity-0 transition-all duration-300">
-                            <div class="flex flex-col items-start">
+                            class="relative bg-slate-900/50 rounded-xl p-4 flex items-center gap-4 group-hover:bg-opacity-0 transition-all duration-300">
+                            <div class="flex flex-col items-start flex-1">
                                 <span class="text-[10px] font-bold text-yellow-200 tracking-wider uppercase opacity-80">Exportar para</span>
                                 <span class="text-lg font-bold text-white">Recebimento</span>
                             </div>
+                            <button @click.stop="toggleHelp('Recebimento')" class="p-2 text-yellow-200/50 hover:text-white transition-colors rounded-full hover:bg-yellow-500/20" title="Ver De-Para">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.178-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                                </svg>
+                            </button>
                             <div
                                 class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -375,11 +390,16 @@
                         class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-rose-500 to-rose-700 p-px shadow-lg hover:shadow-rose-500/25 transition-all duration-300 hover:scale-[1.02]"
                         @click="processFiles('expedicao')">
                         <div
-                            class="relative bg-slate-900/50 rounded-xl p-4 flex items-center justify-between group-hover:bg-opacity-0 transition-all duration-300">
-                            <div class="flex flex-col items-start">
+                            class="relative bg-slate-900/50 rounded-xl p-4 flex items-center gap-4 group-hover:bg-opacity-0 transition-all duration-300">
+                            <div class="flex flex-col items-start flex-1">
                                 <span class="text-[10px] font-bold text-rose-300 tracking-wider uppercase opacity-80">Exportar para</span>
                                 <span class="text-lg font-bold text-white">Expedição</span>
                             </div>
+                            <button @click.stop="toggleHelp('Expedição')" class="p-2 text-rose-300/50 hover:text-white transition-colors rounded-full hover:bg-rose-500/20" title="Ver De-Para">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.178-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                                </svg>
+                            </button>
                             <div
                                 class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -489,7 +509,61 @@
                     const i = Math.floor(Math.log(bytes) / Math.log(k));
                     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
                 },
+                toggleHelp(type) {
+                    this.helpTitle = type;
+                    switch(type) {
+                        case 'Omie':
+                            this.helpData = [
+                                { col: 'Código do Produto', xml: 'prod/cProd', nf: 'Cód. Produto' },
+                                { col: 'Descrição do Produto', xml: 'prod/xProd', nf: 'Nome do Produto' },
+                                { col: 'NCM', xml: 'prod/NCM', nf: 'NCM' },
+                                { col: 'Unidade', xml: 'prod/uCom', nf: 'Unidade Comercial' }
+                            ];
+                            break;
+                        case 'GTI PLUG':
+                            this.helpData = [
+                                { col: 'FORNECEDOR', xml: 'emit/CNPJ', nf: 'CNPJ Emitente' },
+                                { col: 'NOME', xml: 'prod/xProd', nf: 'Nome do Produto' },
+                                { col: 'ID_EXTERNO', xml: 'prod/cProd', nf: 'Cód. Produto' },
+                                { col: 'TIPO', xml: 'Fixo: INTEIRO', nf: '-' },
+                                { col: 'LIMITE_PALL', xml: 'Fixo: 10000', nf: '-' }
+                            ];
+                            break;
+                        case 'Recebimento':
+                            this.helpData = [
+                                { col: 'ID_EXTERNO', xml: 'ide/nNF', nf: 'Número NF' },
+                                { col: 'DESTINATARIO', xml: 'dest/CNPJ', nf: 'CNPJ Destinatário' },
+                                { col: 'PRODUTO', xml: 'prod/cProd', nf: 'Cód. Produto' },
+                                { col: 'QUANTIDADE', xml: 'prod/qCom', nf: 'Quantidade' },
+                                { col: 'LOTE_ITEM', xml: 'rastro/nLote', nf: 'Lote' },
+                                { col: 'VALOR_ITEM', xml: 'prod/vUnCom', nf: 'Valor Unitário' },
+                                { col: 'DATA_FABRICACAO', xml: 'rastro/dFab', nf: 'Data Fabricação' },
+                                { col: 'DATA_VALIDADE', xml: 'rastro/dVal', nf: 'Data Validade' },
+                                { col: 'NUMERO_PEDIDO', xml: 'prod/xPed', nf: 'Pedido Compra' },
+                                { col: 'NUMERO_N_F', xml: 'ide/nNF', nf: 'Número NF' },
+                                { col: 'VALOR_OPERACAO', xml: 'total/vNF', nf: 'Valor Total NF' }
+                            ];
+                            break;
+                        case 'Expedição':
+                            this.helpData = [
+                                { col: 'ID_EXTERNO', xml: 'ide/nNF', nf: 'Número NF' },
+                                { col: 'DESTINATARIO', xml: 'dest/CNPJ', nf: 'CNPJ Destinatário' },
+                                { col: 'PRODUTO', xml: 'prod/cProd', nf: 'Cód. Produto' },
+                                { col: 'QUANTIDADE', xml: 'prod/qCom', nf: 'Quantidade' },
+                                { col: 'LOTE_ITEM', xml: 'rastro/nLote', nf: 'Lote' },
+                                { col: 'VALOR_ITEM', xml: 'prod/vUnCom', nf: 'Valor Unitário' },
+                                { col: 'NUMERO_PEDIDO', xml: 'prod/xPed', nf: 'Pedido' }
+                            ];
+                            break;
+                    }
+                    this.showHelp = true;
+                },
+                helpTitle: '',
+                helpData: [],
+                showHelp: false,
                 async processFiles(type) {
+// ... existing processFiles
+
                     if (this.files.length === 0) return;
 
                     this.$dispatch('process-start');
@@ -578,7 +652,74 @@
                 }
             }
         }
-    </script>
+        <!-- De-Para Modal -->
+        <div x-show="showHelp" style="display: none;" class="fixed inset-0 z-50 flex items-center justify-center p-4"
+            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+
+            <!-- Backdrop -->
+            <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" @click="showHelp = false"></div>
+
+            <!-- Modal Content -->
+            <div class="relative w-full max-w-2xl bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+                @click.stop>
+                <!-- Header -->
+                <div class="px-6 py-4 border-b border-slate-700 flex items-center justify-between bg-slate-800/50">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6 text-indigo-400">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.178-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                        </svg>
+                        De-Para: <span x-text="helpTitle" class="text-indigo-300"></span>
+                    </h3>
+                    <button @click="showHelp = false"
+                        class="text-slate-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-slate-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Table -->
+                <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+                    <div class="overflow-hidden rounded-xl border border-slate-700">
+                        <table class="w-full text-left text-sm text-slate-400">
+                            <thead class="bg-slate-800 text-slate-200 uppercase tracking-wider font-semibold">
+                                <tr>
+                                    <th class="px-4 py-3 border-b border-slate-700">Coluna Arquivo</th>
+                                    <th class="px-4 py-3 border-b border-slate-700">Tag XML</th>
+                                    <th class="px-4 py-3 border-b border-slate-700">Campo NF (Exemplo)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700">
+                                <template x-for="(item, index) in helpData" :key="index">
+                                    <tr class="hover:bg-slate-800/30 transition-colors">
+                                        <td class="px-4 py-3 font-medium text-white" x-text="item.col"></td>
+                                        <td class="px-4 py-3 text-emerald-400 font-mono text-xs" x-text="item.xml"></td>
+                                        <td class="px-4 py-3 text-slate-300" x-text="item.nf"></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="px-6 py-4 bg-slate-800/50 border-t border-slate-700 text-right">
+                    <button @click="showHelp = false"
+                        class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-lg transition-colors">
+                        Fechar (ESC)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+
 
 
     <style>
