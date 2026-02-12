@@ -12,18 +12,24 @@ class ImportController extends Controller
         $request->validate([
             'files' => 'required|array',
             'files.*' => 'required|file|mimes:xml',
+            'cnpj' => 'nullable|string',
+            'armazem' => 'nullable|string',
+            'contrato' => 'nullable|string',
         ]);
 
         $files = $request->file('files');
+        $cnpj = $request->input('cnpj');
+        $armazem = $request->input('armazem');
+        $contrato = $request->input('contrato');
 
         if ($type === 'omie') {
             return $this->exportOmie($files);
         } elseif ($type === 'gti') {
-            return $this->exportGti($files);
+            return $this->exportGti($files, $cnpj);
         } elseif ($type === 'recebimento') {
-            return $this->exportRecebimento($files);
+            return $this->exportRecebimento($files, $armazem, $contrato);
         } elseif ($type === 'expedicao') {
-            return $this->exportExpedicao($files);
+            return $this->exportExpedicao($files, $armazem, $contrato);
         }
 
         return back()->with('error', 'Tipo de exportação inválido.');
@@ -99,7 +105,7 @@ class ImportController extends Controller
         }
     }
 
-    private function exportGti(array $files)
+    private function exportGti(array $files, ?string $overrideCnpj = null)
     {
         try {
             $templatePath = base_path('resources/templates/modeloImportacaoProduto.csv');
@@ -168,7 +174,7 @@ class ImportController extends Controller
                         switch ($colName) {
                             case 'FORNECEDOR':
                             case 'FORNECEDOR_UNICO':
-                                $rowData[] = $cnpj;
+                                $rowData[] = $overrideCnpj ?: $cnpj;
                                 break;
                             case 'NOME':
                                 $rowData[] = (string) $prod->xProd;
@@ -210,9 +216,9 @@ class ImportController extends Controller
         }
     }
 
-    private function exportRecebimento(array $files)
+    private function exportRecebimento(array $files, ?string $overrideArmazem = null, ?string $overrideContrato = null)
     {
-        return $this->generateCsvExport($files, 'resources/templates/modeloImportacaoRecebimento.csv', 'Importacao_Recebimento_', function ($xml, $det, $headerColumns) {
+        return $this->generateCsvExport($files, 'resources/templates/modeloImportacaoRecebimento.csv', 'Importacao_Recebimento_', function ($xml, $det, $headerColumns) use ($overrideArmazem, $overrideContrato) {
             $prod = $det->prod;
             $rowData = [];
             
@@ -237,7 +243,7 @@ class ImportController extends Controller
                         $rowData[] = $destDoc;
                         break;
                     case 'ARMAZEM':
-                        $rowData[] = '[INFORMAR NO ARQUIVO]';
+                        $rowData[] = $overrideArmazem ?: '[INFORMAR NO ARQUIVO]';
                         break;
                     case 'PRODUTO':
                         $rowData[] = (string) $prod->cProd;
@@ -283,7 +289,7 @@ class ImportController extends Controller
                          }
                         break;
                     case 'CONTRATO':
-                        $rowData[] = '[INFORMAR NO ARQUIVO]';
+                        $rowData[] = $overrideContrato ?: '[INFORMAR NO ARQUIVO]';
                         break;
                     case 'DATA_AGENDAMENTO':
                         $rowData[] = '';
@@ -308,9 +314,9 @@ class ImportController extends Controller
         });
     }
 
-    private function exportExpedicao(array $files)
+    private function exportExpedicao(array $files, ?string $overrideArmazem = null, ?string $overrideContrato = null)
     {
-         return $this->generateCsvExport($files, 'resources/templates/modeloImportacaoExpedicao.csv', 'Importacao_Expedicao_', function ($xml, $det, $headerColumns) {
+         return $this->generateCsvExport($files, 'resources/templates/modeloImportacaoExpedicao.csv', 'Importacao_Expedicao_', function ($xml, $det, $headerColumns) use ($overrideArmazem, $overrideContrato) {
             $prod = $det->prod;
             $rowData = [];
             
@@ -334,7 +340,7 @@ class ImportController extends Controller
                         $rowData[] = $destDoc;
                         break;
                     case 'ARMAZEM':
-                        $rowData[] = '[INFORMAR NO ARQUIVO]';
+                        $rowData[] = $overrideArmazem ?: '[INFORMAR NO ARQUIVO]';
                         break;
                     case 'PRODUTO':
                         $rowData[] = (string) $prod->cProd;
@@ -379,7 +385,7 @@ class ImportController extends Controller
                          }
                         break;
                     case 'CONTRATO':
-                        $rowData[] = '[INFORMAR NO ARQUIVO]';
+                        $rowData[] = $overrideContrato ?: '[INFORMAR NO ARQUIVO]';
                         break;
                     case 'DATA_AGENDAMENTO':
                         $rowData[] = '';

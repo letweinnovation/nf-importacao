@@ -604,11 +604,37 @@
                 helpTitle: '',
                 helpData: [],
                 showHelp: false,
-                async processFiles(type) {
-// ... existing processFiles
+                
+                // Config Modal State
+                showConfig: false,
+                configType: '', // 'gti', 'recebimento', 'expedicao'
+                configTitle: '',
+                inputCnpj: '',
+                inputArmazem: '',
+                inputContrato: '',
 
+                async processFiles(type) {
                     if (this.files.length === 0) return;
 
+                    // Intercept and show modal for specific types
+                    if (type === 'gti' && !this.showConfig) {
+                        this.configType = 'gti';
+                        this.configTitle = 'Configuração GTI PLUG';
+                        this.inputCnpj = '';
+                        this.showConfig = true;
+                        return;
+                    }
+                    
+                    if ((type === 'recebimento' || type === 'expedicao') && !this.showConfig) {
+                        this.configType = type;
+                        this.configTitle = type === 'recebimento' ? 'Configuração Recebimento' : 'Configuração Expedição';
+                        this.inputArmazem = '';
+                        this.inputContrato = '';
+                        this.showConfig = true;
+                        return;
+                    }
+
+                    this.showConfig = false;
                     this.$dispatch('process-start');
 
                     const formData = new FormData();
@@ -622,7 +648,12 @@
                             headers: {
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                             },
-                            body: formData
+                            body: (() => {
+                                formData.append('cnpj', this.inputCnpj);
+                                formData.append('armazem', this.inputArmazem);
+                                formData.append('contrato', this.inputContrato);
+                                return formData;
+                            })()
                         });
 
                         // Check if response is JSON (error)
@@ -696,6 +727,64 @@
             }
         }
     </script>
+        <!-- Configuration Modal -->
+        <div x-show="showConfig" style="display: none;" class="fixed inset-0 z-[60] flex items-center justify-center p-4"
+            @keydown.escape.window="showConfig = false"
+            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+
+            <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" @click="showConfig = false"></div>
+
+            <div class="relative w-full max-w-md bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+                @click.stop>
+                <div class="px-6 py-4 border-b border-slate-700 bg-slate-800/50">
+                    <h3 class="text-xl font-bold text-white" x-text="configTitle"></h3>
+                </div>
+
+                <div class="p-6 space-y-4">
+                    <!-- GTI Fields -->
+                    <template x-if="configType === 'gti'">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-400 mb-1">CNPJ do Fornecedor</label>
+                            <input type="text" x-model="inputCnpj" placeholder="Digite o CNPJ"
+                                class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all">
+                        </div>
+                    </template>
+
+                    <!-- Recebimento/Expedição Fields -->
+                    <template x-if="configType === 'recebimento' || configType === 'expedicao'">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-400 mb-1">CÓDIGO DO ARMAZEM</label>
+                                <input type="text" x-model="inputArmazem" placeholder="Digite o código do armazém"
+                                    class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-400 mb-1">CÓDIGO DO CONTRATO</label>
+                                <input type="text" x-model="inputContrato" placeholder="Digite o código do contrato"
+                                    class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all">
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="px-6 py-4 bg-slate-800/50 border-t border-slate-700 flex justify-end gap-3">
+                    <button @click="showConfig = false"
+                        class="px-4 py-2 text-slate-400 hover:text-white transition-colors text-sm font-medium">
+                        Cancelar
+                    </button>
+                    <button @click="processFiles(configType)"
+                        class="px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold rounded-lg shadow-lg shadow-indigo-500/20 transition-all flex items-center gap-2">
+                        Exportar
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- De-Para Modal -->
         <div x-show="showHelp" style="display: none;" class="fixed inset-0 z-50 flex items-center justify-center p-4"
             @keydown.escape.window="showHelp = false"
