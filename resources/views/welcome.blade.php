@@ -525,30 +525,52 @@
                                 { col: 'Código do Produto', xml: 'prod/cProd', nf: 'Cód. Produto' },
                                 { col: 'Descrição do Produto', xml: 'prod/xProd', nf: 'Nome do Produto' },
                                 { col: 'NCM', xml: 'prod/NCM', nf: 'NCM' },
-                                { col: 'Unidade', xml: 'prod/uCom', nf: 'Unidade Comercial' }
+                                { col: 'Unidade', xml: 'prod/uCom', nf: 'Unidade Comercial' },
+                                { col: 'Outras Colunas', xml: '-', nf: 'Vazio / Padrão do Template' }
                             ];
                             break;
                         case 'GTI PLUG':
                             this.helpData = [
-                                { col: 'FORNECEDOR', xml: 'emit/CNPJ', nf: 'CNPJ Emitente' },
+                                { col: 'FORNECEDOR_UNICO', xml: 'emit/CNPJ', nf: 'CNPJ Emitente' },
                                 { col: 'NOME', xml: 'prod/xProd', nf: 'Nome do Produto' },
-                                { col: 'ID_EXTERNO', xml: 'prod/cProd', nf: 'Cód. Produto' },
+                                { col: 'DESCRICAO', xml: '-', nf: '-' },
                                 { col: 'TIPO', xml: 'Fixo: INTEIRO', nf: '-' },
-                                { col: 'LIMITE_PALL', xml: 'Fixo: 10000', nf: '-' }
+                                { col: 'ID_EXTERNO', xml: 'prod/cProd', nf: 'Cód. Produto' },
+                                { col: 'FATOR_MULTIPLICACAO', xml: '-', nf: '-' },
+                                { col: 'LIMITE_PALLET_VIRTUAL', xml: 'Fixo: 10000', nf: '-' },
+                                { col: 'LIMITE_BLOCO', xml: '-', nf: '-' },
+                                { col: 'UNIDADE_TAMANHO', xml: '-', nf: '-' },
+                                { col: 'UNIDADE_TAMANHO_SECUNDARIA', xml: '-', nf: '-' },
+                                { col: 'INFORMAR_SERIE', xml: '-', nf: '-' },
+                                { col: 'INFORMAR_LOTE', xml: '-', nf: '-' },
+                                { col: 'INFORMAR_PESO', xml: '-', nf: '-' },
+                                { col: 'INFORMAR_VALOR', xml: '-', nf: '-' },
+                                { col: 'INFORMAR_DATA_FABRICACAO', xml: '-', nf: '-' },
+                                { col: 'INFORMAR_DATA_VALIDADE', xml: '-', nf: '-' },
+                                { col: 'COD_BARRAS', xml: '-', nf: '-' },
+                                { col: 'REG_STATUS', xml: '-', nf: '-' },
+                                { col: 'CONTRATO_CLIENTE', xml: '-', nf: '-' },
+                                { col: 'CODIGO_INTEGRACAO', xml: '-', nf: '-' }
                             ];
                             break;
                         case 'Recebimento':
                             this.helpData = [
                                 { col: 'ID_EXTERNO', xml: 'ide/nNF', nf: 'Número NF' },
                                 { col: 'DESTINATARIO', xml: 'dest/CNPJ', nf: 'CNPJ Destinatário' },
+                                { col: 'ARMAZEM', xml: 'Fixo: ESTOQUE', nf: '-' },
                                 { col: 'PRODUTO', xml: 'prod/cProd', nf: 'Cód. Produto' },
                                 { col: 'QUANTIDADE', xml: 'prod/qCom', nf: 'Quantidade' },
+                                { col: 'SERIE_ITEM', xml: '-', nf: '-' },
                                 { col: 'LOTE_ITEM', xml: 'rastro/nLote', nf: 'Lote' },
+                                { col: 'PESO_ITEM', xml: '-', nf: '-' },
                                 { col: 'VALOR_ITEM', xml: 'prod/vUnCom', nf: 'Valor Unitário' },
-                                { col: 'DATA_FABRICACAO', xml: 'rastro/dFab', nf: 'Data Fabricação' },
-                                { col: 'DATA_VALIDADE', xml: 'rastro/dVal', nf: 'Data Validade' },
+                                { col: 'DATA_FABRICACAO_ITEM', xml: 'rastro/dFab', nf: 'Data Fabricação' },
+                                { col: 'DATA_VALIDADE_ITEM', xml: 'rastro/dVal', nf: 'Data Validade' },
+                                { col: 'CONTRATO', xml: '-', nf: '-' },
+                                { col: 'DATA_AGENDAMENTO', xml: '-', nf: '-' },
                                 { col: 'NUMERO_PEDIDO', xml: 'prod/xPed', nf: 'Pedido Compra' },
                                 { col: 'NUMERO_N_F', xml: 'ide/nNF', nf: 'Número NF' },
+                                { col: 'SERIE_N_F', xml: 'ide/serie', nf: 'Série NF' },
                                 { col: 'VALOR_OPERACAO', xml: 'total/vNF', nf: 'Valor Total NF' }
                             ];
                             break;
@@ -556,11 +578,24 @@
                             this.helpData = [
                                 { col: 'ID_EXTERNO', xml: 'ide/nNF', nf: 'Número NF' },
                                 { col: 'DESTINATARIO', xml: 'dest/CNPJ', nf: 'CNPJ Destinatário' },
+                                { col: 'ARMAZEM', xml: 'Fixo: ESTOQUE', nf: '-' },
                                 { col: 'PRODUTO', xml: 'prod/cProd', nf: 'Cód. Produto' },
                                 { col: 'QUANTIDADE', xml: 'prod/qCom', nf: 'Quantidade' },
+                                { col: 'SERIE_ITEM', xml: '-', nf: '-' },
                                 { col: 'LOTE_ITEM', xml: 'rastro/nLote', nf: 'Lote' },
+                                { col: 'PESO_ITEM', xml: '-', nf: '-' },
                                 { col: 'VALOR_ITEM', xml: 'prod/vUnCom', nf: 'Valor Unitário' },
-                                { col: 'NUMERO_PEDIDO', xml: 'prod/xPed', nf: 'Pedido' }
+                                { col: 'DATA_FABRICACAO_ITEM', xml: 'rastro/dFab', nf: 'Data Fabricação' },
+                                { col: 'DATA_VALIDADE_ITEM', xml: 'rastro/dVal', nf: 'Data Validade' },
+                                { col: 'CONTRATO', xml: '-', nf: '-' },
+                                { col: 'DATA_AGENDAMENTO', xml: '-', nf: '-' },
+                                { col: 'NUMERO_PEDIDO', xml: 'prod/xPed', nf: 'Pedido' },
+                                { col: 'NUMERO_N_F', xml: 'ide/nNF', nf: 'Número NF' },
+                                { col: 'SERIE_N_F', xml: 'ide/serie', nf: 'Série NF' },
+                                { col: 'VALOR_OPERACAO', xml: 'total/vNF', nf: 'Valor Total NF' },
+                                { col: 'INDICADOR_TRANSFERENCIA', xml: 'Fixo: N', nf: '-' },
+                                { col: 'ARMAZEM_DESTINO_TRANSFERENCIA', xml: '-', nf: '-' },
+                                { col: 'RECEBIMENTO_ETAPA_REFERENCIA', xml: '-', nf: '-' }
                             ];
                             break;
                     }
