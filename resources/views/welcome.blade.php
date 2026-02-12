@@ -746,7 +746,7 @@
                     <!-- GTI Fields -->
                     <template x-if="configType === 'gti'">
                         <div>
-                            <label class="block text-sm font-medium text-slate-400 mb-1">CNPJ do Fornecedor</label>
+                            <label class="block text-sm font-medium text-slate-400 mb-1">CNPJ da sua conta</label>
                             <input type="text" x-model="inputCnpj" placeholder="Digite o CNPJ"
                                 class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all">
                         </div>
