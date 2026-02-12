@@ -237,7 +237,7 @@ class ImportController extends Controller
                         $rowData[] = $destDoc;
                         break;
                     case 'ARMAZEM':
-                        $rowData[] = 'ESTOQUE';
+                        $rowData[] = '[INFORMAR NO ARQUIVO]';
                         break;
                     case 'PRODUTO':
                         $rowData[] = (string) $prod->cProd;
@@ -334,7 +334,7 @@ class ImportController extends Controller
                         $rowData[] = $destDoc;
                         break;
                     case 'ARMAZEM':
-                        $rowData[] = 'ESTOQUE';
+                        $rowData[] = '[INFORMAR NO ARQUIVO]';
                         break;
                     case 'PRODUTO':
                         $rowData[] = (string) $prod->cProd;

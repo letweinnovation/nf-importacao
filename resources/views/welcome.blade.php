@@ -557,7 +557,7 @@
                             this.helpData = [
                                 { col: 'ID_EXTERNO', xml: 'ide/nNF', nf: 'Número NF' },
                                 { col: 'DESTINATARIO', xml: 'dest/CNPJ', nf: 'CNPJ Destinatário' },
-                                { col: 'ARMAZEM', xml: 'Fixo: ESTOQUE', nf: '-' },
+                                { col: 'ARMAZEM', xml: 'Fixo: [INFORMAR NO ARQUIVO]', nf: '-' },
                                 { col: 'PRODUTO', xml: 'prod/cProd', nf: 'Cód. Produto' },
                                 { col: 'QUANTIDADE', xml: 'prod/qCom', nf: 'Quantidade' },
                                 { col: 'SERIE_ITEM', xml: '-', nf: '-' },
@@ -578,7 +578,7 @@
                             this.helpData = [
                                 { col: 'ID_EXTERNO', xml: 'ide/nNF', nf: 'Número NF' },
                                 { col: 'DESTINATARIO', xml: 'dest/CNPJ', nf: 'CNPJ Destinatário' },
-                                { col: 'ARMAZEM', xml: 'Fixo: ESTOQUE', nf: '-' },
+                                { col: 'ARMAZEM', xml: 'Fixo: [INFORMAR NO ARQUIVO]', nf: '-' },
                                 { col: 'PRODUTO', xml: 'prod/cProd', nf: 'Cód. Produto' },
                                 { col: 'QUANTIDADE', xml: 'prod/qCom', nf: 'Quantidade' },
                                 { col: 'SERIE_ITEM', xml: '-', nf: '-' },
