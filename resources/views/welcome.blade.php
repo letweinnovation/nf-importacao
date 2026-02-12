@@ -302,9 +302,11 @@
                     Cadastro de Produto
                 </h3>
                 <div class="grid grid-cols-1 gap-6">
-                    <button
-                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 p-px shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 hover:scale-[1.02]"
-                        @click="processFiles('omie')">
+                    <div role="button" tabindex="0"
+                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 p-px shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                        @click="processFiles('omie')"
+                        @keydown.enter="processFiles('omie')"
+                        @keydown.space.prevent="processFiles('omie')">
                         <div
                             class="relative bg-slate-900/50 rounded-xl p-4 flex items-center gap-4 group-hover:bg-opacity-0 transition-all duration-300">
                             <div class="flex flex-col items-start flex-1">
@@ -325,11 +327,13 @@
                                 </svg>
                             </div>
                         </div>
-                    </button>
+                    </div>
 
-                    <button
-                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 p-px shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-[1.02]"
-                        @click="processFiles('gti')">
+                    <div role="button" tabindex="0"
+                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 p-px shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                        @click="processFiles('gti')"
+                        @keydown.enter="processFiles('gti')"
+                        @keydown.space.prevent="processFiles('gti')">
                         <div
                             class="relative bg-slate-900/50 rounded-xl p-4 flex items-center gap-4 group-hover:bg-opacity-0 transition-all duration-300">
                             <div class="flex flex-col items-start flex-1">
@@ -350,7 +354,7 @@
                                 </svg>
                             </div>
                         </div>
-                    </button>
+                    </div>
                 </div>
             </div>
 
@@ -361,9 +365,11 @@
                     Operação GTI PLUG
                 </h3>
                 <div class="grid grid-cols-1 gap-8">
-                    <button
-                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-yellow-300 to-yellow-500 p-px shadow-lg hover:shadow-yellow-400/25 transition-all duration-300 hover:scale-[1.02]"
-                        @click="processFiles('recebimento')">
+                    <div role="button" tabindex="0"
+                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-yellow-300 to-yellow-500 p-px shadow-lg hover:shadow-yellow-400/25 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                        @click="processFiles('recebimento')"
+                        @keydown.enter="processFiles('recebimento')"
+                        @keydown.space.prevent="processFiles('recebimento')">
                         <div
                             class="relative bg-slate-900/50 rounded-xl p-4 flex items-center gap-4 group-hover:bg-opacity-0 transition-all duration-300">
                             <div class="flex flex-col items-start flex-1">
@@ -384,11 +390,13 @@
                                 </svg>
                             </div>
                         </div>
-                    </button>
+                    </div>
 
-                    <button
-                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-rose-500 to-rose-700 p-px shadow-lg hover:shadow-rose-500/25 transition-all duration-300 hover:scale-[1.02]"
-                        @click="processFiles('expedicao')">
+                    <div role="button" tabindex="0"
+                        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-rose-500 to-rose-700 p-px shadow-lg hover:shadow-rose-500/25 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                        @click="processFiles('expedicao')"
+                        @keydown.enter="processFiles('expedicao')"
+                        @keydown.space.prevent="processFiles('expedicao')">
                         <div
                             class="relative bg-slate-900/50 rounded-xl p-4 flex items-center gap-4 group-hover:bg-opacity-0 transition-all duration-300">
                             <div class="flex flex-col items-start flex-1">
@@ -409,7 +417,7 @@
                                 </svg>
                             </div>
                         </div>
-                    </button>
+                    </div>
                 </div>
             </div>
         </div>
