@@ -660,6 +660,7 @@
                 }
             }
         }
+    </script>
         <!-- De-Para Modal -->
         <div x-show="showHelp" style="display: none;" class="fixed inset-0 z-50 flex items-center justify-center p-4"
             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
@@ -726,7 +727,7 @@
         </div>
     </div>
     
-    <script>
+
 
 
 
