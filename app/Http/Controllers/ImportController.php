@@ -14,7 +14,7 @@ class ImportController extends Controller
         // Validation (can be expanded later)
         $request->validate([
             'files' => 'required|array',
-            'files.*' => 'required|file|mimes:xml',
+            'files.*' => 'required|file|extensions:xml',
             'cnpj' => 'nullable|string',
             'armazem' => 'nullable|string',
             'contrato' => 'nullable|string',
