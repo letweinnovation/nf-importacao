@@ -663,6 +663,13 @@
                             throw new Error(data.message || 'Erro no processamento');
                         }
 
+                        // Check if response is HTML (server returned error page or redirect)
+                        if (contentType && contentType.indexOf("text/html") !== -1) {
+                            const htmlText = await response.text();
+                            console.error('Server returned HTML instead of file:', htmlText.substring(0, 500));
+                            throw new Error('Erro no servidor: resposta inesperada. Tente novamente.');
+                        }
+
                         if (!response.ok) throw new Error('Erro na requisição');
 
                         // Handle File Download

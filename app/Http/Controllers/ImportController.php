@@ -8,6 +8,9 @@ class ImportController extends Controller
 {
     public function update(Request $request, string $type)
     {
+        // Force JSON responses for validation errors since this is called via fetch()
+        $request->headers->set('Accept', 'application/json');
+
         // Validation (can be expanded later)
         $request->validate([
             'files' => 'required|array',
@@ -32,7 +35,7 @@ class ImportController extends Controller
             return $this->exportExpedicao($files, $armazem, $contrato);
         }
 
-        return back()->with('error', 'Tipo de exportação inválido.');
+        return response()->json(['message' => 'Tipo de exportação inválido.'], 400);
     }
 
     private function exportOmie(array $files)
