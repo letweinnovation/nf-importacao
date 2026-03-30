@@ -191,6 +191,9 @@ class ImportController extends Controller
                             case 'ID_EXTERNO':
                                 $rowData[] = (string) $prod->cProd;
                                 break;
+                            case 'COD_BARRAS':
+                                $rowData[] = (string) ($prod->cEAN ?? '');
+                                break;
                             case 'LIMITE_PALL':
                             case 'LIMITE_PALLET_VIRTUAL':
                                 $rowData[] = '10000';
@@ -252,7 +255,7 @@ class ImportController extends Controller
                         $rowData[] = (string) $prod->cProd;
                         break;
                     case 'QUANTIDADE':
-                        $rowData[] = (string) $prod->qCom;
+                        $rowData[] = $this->formatNfeNumber($prod->qCom);
                         break;
                     case 'SERIE_ITEM':
                         $rowData[] = '';
@@ -264,8 +267,8 @@ class ImportController extends Controller
                         } else {
                             // Try to extract from infAdProd if it contains "Lote:"
                             $infAdProd = (string)($det->infAdProd ?? '');
-                            if (preg_match('/Lote:\s*([^\s]+)/i', $infAdProd, $matches)) {
-                                $rowData[] = $matches[1];
+                            if (preg_match('/Lote:\s*([^\s;]+)/i', $infAdProd, $matches)) {
+                                $rowData[] = (string) $matches[1];
                             } else {
                                 $rowData[] = '';
                             }
@@ -275,7 +278,7 @@ class ImportController extends Controller
                         $rowData[] = '';
                         break;
                     case 'VALOR_ITEM':
-                        $rowData[] = (string) $prod->vUnCom;
+                        $rowData[] = $this->formatNfeNumber($prod->vUnCom);
                         break;
                     case 'DATA_FABRICACAO_ITEM':
                          if (isset($prod->rastro) && isset($prod->rastro->dFab)) {
@@ -307,7 +310,7 @@ class ImportController extends Controller
                         $rowData[] = $serie;
                         break;
                     case 'VALOR_OPERACAO':
-                         $rowData[] = $vNF;
+                         $rowData[] = $this->formatNfeNumber($vNF);
                         break;
                     default:
                         $rowData[] = '';
@@ -349,7 +352,7 @@ class ImportController extends Controller
                         $rowData[] = (string) $prod->cProd;
                         break;
                     case 'QUANTIDADE':
-                        $rowData[] = (string) $prod->qCom;
+                        $rowData[] = $this->formatNfeNumber($prod->qCom);
                         break;
                     case 'SERIE_ITEM':
                         $rowData[] = '';
@@ -360,8 +363,8 @@ class ImportController extends Controller
                         } else {
                              // Try to extract from infAdProd if it contains "Lote:"
                              $infAdProd = (string)($det->infAdProd ?? '');
-                             if (preg_match('/Lote:\s*([^\s]+)/i', $infAdProd, $matches)) {
-                                 $rowData[] = $matches[1];
+                             if (preg_match('/Lote:\s*([^\s;]+)/i', $infAdProd, $matches)) {
+                                 $rowData[] = (string) $matches[1];
                              } else {
                                  $rowData[] = '';
                              }
@@ -371,7 +374,7 @@ class ImportController extends Controller
                         $rowData[] = '';
                         break;
                     case 'VALOR_ITEM':
-                        $rowData[] = (string) $prod->vUnCom;
+                        $rowData[] = $this->formatNfeNumber($prod->vUnCom);
                         break;
                      case 'DATA_FABRICACAO_ITEM':
                          if (isset($prod->rastro) && isset($prod->rastro->dFab)) {
@@ -403,7 +406,7 @@ class ImportController extends Controller
                         $rowData[] = $serie;
                         break;
                     case 'VALOR_OPERACAO':
-                        $rowData[] = $vNF;
+                        $rowData[] = $this->formatNfeNumber($vNF);
                         break;
                     case 'INDICADOR_TRANSFERENCIA':
                         $rowData[] = 'N'; // Padrão N
@@ -508,6 +511,19 @@ class ImportController extends Controller
             abort(404);
         }
         return response()->download($path);
+    }
+
+    private function formatNfeNumber($value)
+    {
+        if ($value === null || (string)$value === '') {
+            return '';
+        }
+        
+        // Remove trailing zeros and ensure numeric treatment
+        $num = floatval((string)$value);
+        
+        // Return with comma decimal separator (Standard for GTI PLUG import via SharedUtils.convertBrStringToDouble)
+        return str_replace('.', ',', (string)$num);
     }
 
     private function formatBytes($bytes, $precision = 2)
