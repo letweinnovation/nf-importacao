@@ -60,6 +60,7 @@ class ImportController extends Controller
                 'cProd' => 'C',   // Código do Produto
                 'xProd' => 'D',   // Descrição do Produto
                 'NCM' => 'E',     // Código NCM
+                'cEAN' => 'G',    // Código EAN (GTIN)
                 'uCom' => 'I',    // Unidade
             ];
 
@@ -87,6 +88,8 @@ class ImportController extends Controller
                         $sheet->setCellValue($colMap['xProd'] . $currentRow, (string) $prod->xProd);
                     if (isset($colMap['NCM']))
                         $sheet->setCellValue($colMap['NCM'] . $currentRow, (string) $prod->NCM);
+                    if (isset($colMap['cEAN']))
+                        $sheet->setCellValue($colMap['cEAN'] . $currentRow, (string) ($prod->cEAN ?? ''));
                     if (isset($colMap['uCom']))
                         $sheet->setCellValue($colMap['uCom'] . $currentRow, (string) $prod->uCom);
 
@@ -211,6 +214,9 @@ class ImportController extends Controller
             if ($totalProducts === 0) {
                 throw new \Exception('O sistema não encontrou nenhum produto (<det>) nos arquivos XML fornecidos.');
             }
+
+            // Garante o UTF-8 BOM no início do arquivo para que o Excel identifique os acentos corretamente
+            $csvContent = "\xEF\xBB\xBF" . ltrim($csvContent, "\xEF\xBB\xBF");
 
             $fileName = 'Importacao_GTI_' . date('Y-m-d_H-i-s') . '.csv';
             $tempPath = storage_path('app/' . $fileName);
@@ -504,6 +510,9 @@ class ImportController extends Controller
             if ($totalItems === 0) {
                 throw new \Exception('Nenhum item encontrado nos arquivos XML.');
             }
+
+            // Garante o UTF-8 BOM no início do arquivo para que o Excel identifique os acentos corretamente
+            $csvContent = "\xEF\xBB\xBF" . ltrim($csvContent, "\xEF\xBB\xBF");
 
             $fileName = $outputPrefix . date('Y-m-d_H-i-s') . '.csv';
             $tempPath = storage_path('app/' . $fileName);
