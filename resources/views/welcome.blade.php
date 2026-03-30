@@ -612,6 +612,7 @@
                 inputCnpj: '',
                 inputArmazem: '',
                 inputContrato: '',
+                inputRemetente: 'destinatario',
 
                 async processFiles(type) {
                     if (this.files.length === 0) return;
@@ -652,6 +653,7 @@
                                 formData.append('cnpj', this.inputCnpj);
                                 formData.append('armazem', this.inputArmazem);
                                 formData.append('contrato', this.inputContrato);
+                                formData.append('remetente', this.inputRemetente);
                                 return formData;
                             })()
                         });
@@ -762,6 +764,14 @@
                     <!-- Recebimento/Expedição Fields -->
                     <template x-if="configType === 'recebimento' || configType === 'expedicao'">
                         <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-400 mb-1" x-text="configType === 'recebimento' ? 'REMETENTE (VAI PARA DESTINATÁRIO NA PLANILHA)' : 'DESTINATÁRIO (VAI PARA DESTINATÁRIO NA PLANILHA)'"></label>
+                                <select x-model="inputRemetente" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all">
+                                    <option value="destinatario">DESTINATÁRIO / REMETENTE</option>
+                                    <option value="emitente">IDENTIFICAÇÃO DO EMITENTE</option>
+                                    <option value="transportadora">TRANSPORTADOR / VOLUMES TRANSPORTADOS</option>
+                                </select>
+                            </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-400 mb-1">CÓDIGO DO ARMAZEM</label>
                                 <input type="text" x-model="inputArmazem" placeholder="Digite o código do armazém"

@@ -18,21 +18,23 @@ class ImportController extends Controller
             'cnpj' => 'nullable|string',
             'armazem' => 'nullable|string',
             'contrato' => 'nullable|string',
+            'remetente' => 'nullable|string', // Utilizado como source para coluna DESTINATARIO
         ]);
 
         $files = $request->file('files');
         $cnpj = $request->input('cnpj');
         $armazem = $request->input('armazem');
         $contrato = $request->input('contrato');
+        $remetente = $request->input('remetente');
 
         if ($type === 'omie') {
             return $this->exportOmie($files);
         } elseif ($type === 'gti') {
             return $this->exportGti($files, $cnpj);
         } elseif ($type === 'recebimento') {
-            return $this->exportRecebimento($files, $armazem, $contrato);
+            return $this->exportRecebimento($files, $armazem, $contrato, $remetente);
         } elseif ($type === 'expedicao') {
-            return $this->exportExpedicao($files, $armazem, $contrato);
+            return $this->exportExpedicao($files, $armazem, $contrato, $remetente);
         }
 
         return response()->json(['message' => 'Tipo de exportação inválido.'], 400);
@@ -222,22 +224,32 @@ class ImportController extends Controller
         }
     }
 
-    private function exportRecebimento(array $files, ?string $overrideArmazem = null, ?string $overrideContrato = null)
+    private function exportRecebimento(array $files, ?string $overrideArmazem = null, ?string $overrideContrato = null, ?string $remetenteStrategy = null)
     {
-        return $this->generateCsvExport($files, 'resources/templates/modeloImportacaoRecebimento.csv', 'Importacao_Recebimento_', function ($xml, $det, $headerColumns) use ($overrideArmazem, $overrideContrato) {
+        return $this->generateCsvExport($files, 'resources/templates/modeloImportacaoRecebimento.csv', 'Importacao_Recebimento_', function ($xml, $det, $headerColumns) use ($overrideArmazem, $overrideContrato, $remetenteStrategy) {
             $prod = $det->prod;
             $rowData = [];
             
             // Commmon XML data extraction (using xpath on $xml is safe as ns is registered on $xml)
             $emit = $xml->xpath('//nfe:infNFe/nfe:emit') ?: $xml->xpath('//emit');
             $dest = $xml->xpath('//nfe:infNFe/nfe:dest') ?: $xml->xpath('//dest');
+            $transp = $xml->xpath('//nfe:infNFe/nfe:transp/nfe:transporta') ?: $xml->xpath('//transp/transporta');
             $ide = $xml->xpath('//nfe:infNFe/nfe:ide') ?: $xml->xpath('//ide');
             $total = $xml->xpath('//nfe:infNFe/nfe:total/nfe:ICMSTot') ?: $xml->xpath('//total/ICMSTot');
 
             $nNF = !empty($ide) ? (string) ($ide[0]->nNF ?? '') : '';
             $serie = !empty($ide) ? (string) ($ide[0]->serie ?? '') : '';
+            $emitDoc = !empty($emit) ? (string) ($emit[0]->CNPJ ?? $emit[0]->CPF ?? '') : '';
             $destDoc = !empty($dest) ? (string) ($dest[0]->CNPJ ?? $dest[0]->CPF ?? '') : '';
+            $transpDoc = !empty($transp) ? (string) ($transp[0]->CNPJ ?? $transp[0]->CPF ?? '') : '';
             $vNF = !empty($total) ? (string) ($total[0]->vNF ?? '') : '';
+
+            $targetDoc = $destDoc; // default
+            if ($remetenteStrategy === 'emitente') {
+                $targetDoc = $emitDoc;
+            } elseif ($remetenteStrategy === 'transportadora') {
+                $targetDoc = $transpDoc;
+            }
 
              foreach ($headerColumns as $col) {
                 $colName = trim($col);
@@ -246,7 +258,7 @@ class ImportController extends Controller
                         $rowData[] = $nNF;
                         break;
                     case 'DESTINATARIO':
-                        $rowData[] = $destDoc;
+                        $rowData[] = $targetDoc;
                         break;
                     case 'ARMAZEM':
                         $rowData[] = $overrideArmazem ?: '[INFORMAR NO ARQUIVO]';
@@ -320,21 +332,32 @@ class ImportController extends Controller
         });
     }
 
-    private function exportExpedicao(array $files, ?string $overrideArmazem = null, ?string $overrideContrato = null)
+    private function exportExpedicao(array $files, ?string $overrideArmazem = null, ?string $overrideContrato = null, ?string $remetenteStrategy = null)
     {
-         return $this->generateCsvExport($files, 'resources/templates/modeloImportacaoExpedicao.csv', 'Importacao_Expedicao_', function ($xml, $det, $headerColumns) use ($overrideArmazem, $overrideContrato) {
+         return $this->generateCsvExport($files, 'resources/templates/modeloImportacaoExpedicao.csv', 'Importacao_Expedicao_', function ($xml, $det, $headerColumns) use ($overrideArmazem, $overrideContrato, $remetenteStrategy) {
             $prod = $det->prod;
             $rowData = [];
             
             // Commmon XML data extraction
+            $emit = $xml->xpath('//nfe:infNFe/nfe:emit') ?: $xml->xpath('//emit');
             $dest = $xml->xpath('//nfe:infNFe/nfe:dest') ?: $xml->xpath('//dest');
+            $transp = $xml->xpath('//nfe:infNFe/nfe:transp/nfe:transporta') ?: $xml->xpath('//transp/transporta');
             $ide = $xml->xpath('//nfe:infNFe/nfe:ide') ?: $xml->xpath('//ide');
             $total = $xml->xpath('//nfe:infNFe/nfe:total/nfe:ICMSTot') ?: $xml->xpath('//total/ICMSTot');
 
             $nNF = !empty($ide) ? (string) ($ide[0]->nNF ?? '') : '';
             $serie = !empty($ide) ? (string) ($ide[0]->serie ?? '') : '';
+            $emitDoc = !empty($emit) ? (string) ($emit[0]->CNPJ ?? $emit[0]->CPF ?? '') : '';
             $destDoc = !empty($dest) ? (string) ($dest[0]->CNPJ ?? $dest[0]->CPF ?? '') : '';
+            $transpDoc = !empty($transp) ? (string) ($transp[0]->CNPJ ?? $transp[0]->CPF ?? '') : '';
             $vNF = !empty($total) ? (string) ($total[0]->vNF ?? '') : '';
+
+            $targetDoc = $destDoc; // default
+            if ($remetenteStrategy === 'emitente') {
+                $targetDoc = $emitDoc;
+            } elseif ($remetenteStrategy === 'transportadora') {
+                $targetDoc = $transpDoc;
+            }
 
              foreach ($headerColumns as $col) {
                 $colName = trim($col);
@@ -343,7 +366,7 @@ class ImportController extends Controller
                         $rowData[] = $nNF;
                         break;
                     case 'DESTINATARIO':
-                        $rowData[] = $destDoc;
+                        $rowData[] = $targetDoc;
                         break;
                     case 'ARMAZEM':
                         $rowData[] = $overrideArmazem ?: '[INFORMAR NO ARQUIVO]';
