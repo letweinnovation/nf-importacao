@@ -88,8 +88,13 @@ class ImportController extends Controller
                         $sheet->setCellValue($colMap['xProd'] . $currentRow, (string) $prod->xProd);
                     if (isset($colMap['NCM']))
                         $sheet->setCellValue($colMap['NCM'] . $currentRow, (string) $prod->NCM);
-                    if (isset($colMap['cEAN']))
-                        $sheet->setCellValue($colMap['cEAN'] . $currentRow, (string) ($prod->cEAN ?? ''));
+                    if (isset($colMap['cEAN'])) {
+                        $ean = (string) ($prod->cEAN ?? '');
+                        if ($ean === 'SEM GTIN') {
+                            $ean = '';
+                        }
+                        $sheet->setCellValue($colMap['cEAN'] . $currentRow, $ean);
+                    }
                     if (isset($colMap['uCom']))
                         $sheet->setCellValue($colMap['uCom'] . $currentRow, (string) $prod->uCom);
 
