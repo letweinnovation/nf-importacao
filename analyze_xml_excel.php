@@ -25,7 +25,7 @@ class ChunkReadFilter implements IReadFilter
     }
 }
 
-$excelFile = 'Omie_Produtos_v1_9_5.xlsx';
+$excelFile = 'resources/templates/Omie_Produtos_v1_9_6.xlsx';
 $xmlFile = 'XML NF.3285  DRESS.xml';
 
 echo "--- Analyzing XML ---\n";

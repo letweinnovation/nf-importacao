@@ -1,45 +1,36 @@
 <?php
-
 require 'vendor/autoload.php';
-
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-$inputFile = 'Omie_Produtos_v1_9_5.xlsx';
+function analyze_file($filename) {
+    echo "Analyzing $filename:\n";
+    try {
+        $spreadsheet = IOFactory::load($filename);
+        $worksheet = $spreadsheet->getActiveSheet();
+        $highestColumn = $worksheet->getHighestColumn();
+        $highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn);
 
-try {
-    $spreadsheet = IOFactory::load($inputFile);
-    $worksheet = $spreadsheet->getActiveSheet();
-
-    echo "Reading headers from row 1:\n";
-
-    $highestColumn = $worksheet->getHighestColumn();
-    $headers = [];
-
-    // Iterate through columns A to highest
-    foreach (range('A', $highestColumn) as $col) {
-        $val = $worksheet->getCell($col . '1')->getValue();
-        if ($val) {
-            echo "Col $col: $val\n";
-            $headers[$val] = $col;
-        }
-    }
-
-    echo "\n--- Key Columns ---\n";
-    $keys = ['Código do Produto', 'Descrição', 'Código NCM'];
-    foreach ($keys as $key) {
-        $found = false;
-        foreach ($headers as $headerVal => $col) {
-            // Loose comparison for headers usually good
-            if (stripos($headerVal, $key) !== false) {
-                echo "Found '$key' at Column: $col (Header: $headerVal)\n";
-                $found = true;
-                break;
+        for ($rowIdx = 1; $rowIdx <= 10; $rowIdx++) {
+            $hasData = false;
+            $rowStr = "Row $rowIdx: ";
+            for ($col = 1; $col <= 20; ++$col) {
+                $val = $worksheet->getCell([$col, $rowIdx])->getValue();
+                if (!empty($val)) {
+                    $hasData = true;
+                    $colLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col);
+                    $rowStr .= "[$colLetter] $val | ";
+                }
+            }
+            if ($hasData) {
+                echo $rowStr . "\n";
             }
         }
-        if (!$found)
-            echo "WARNING: Could not find column for '$key'\n";
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
     }
-
-} catch (Exception $e) {
-    echo 'Error loading file: ', $e->getMessage();
+    echo "====================================\n";
 }
+
+ini_set('memory_limit', '2048M');
+analyze_file('resources/templates/Omie_Produtos_v1_9_5.xlsx');
+analyze_file('resources/templates/Omie_Produtos_v1_9_6.xlsx');

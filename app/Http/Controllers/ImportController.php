@@ -42,7 +42,7 @@ class ImportController extends Controller
 
     private function exportOmie(array $files)
     {
-        $templatePath = base_path('resources/templates/Omie_Produtos_v1_9_5.xlsx');
+        $templatePath = base_path('resources/templates/Omie_Produtos_v1_9_6.xlsx');
 
         if (!file_exists($templatePath)) {
             throw new \Exception('Modelo Excel não encontrado no servidor.');
